@@ -655,7 +655,7 @@ main + .footer .footer__inner { border-radius: var(--r-xl); }
 .footer__word em { font-style: italic; font-weight: 300; font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1; }
 .footer__word .fw { display: inline-block; white-space: nowrap; overflow: hidden; padding: .2em .14em .36em; margin: -.2em -.14em -.36em; }
 .footer__word.is-in .fw { overflow: visible; }
-.footer__word.is-in .fl { transition: transform .6s var(--ease); }
+.footer__word.is-live .fl { transition: transform .6s var(--ease); }
 .footer__word .fl {
   display: inline-block; padding: .14em .1em .3em; margin: -.14em -.1em -.3em;
   background-image: linear-gradient(105deg, rgba(255, 249, 238, 0) 40%, rgba(255, 249, 238, .95) 50%, rgba(255, 249, 238, 0) 60%), linear-gradient(180deg, #f6dcbc 18%, #c98d55 64%, rgba(201, 141, 85, .45) 94%);

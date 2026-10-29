@@ -40,7 +40,7 @@
   const gsap = window.gsap, ST = window.ScrollTrigger;
   if (!gsap || !ST || reduced) {
     $$('[data-split]').forEach((el) => el.classList.add('is-in'));
-    $$('.footer__word').forEach((el) => el.classList.add('is-in'));
+    $$('.footer__word').forEach((el) => el.classList.add('is-in', 'is-live'));
     $$('[data-reveal]').forEach((el) => { el.style.opacity = 1; el.style.transform = 'none'; });
     $$('[data-clip]').forEach((el) => { el.style.clipPath = 'none'; });
     $$('.lw').forEach((el) => { el.style.opacity = 1; });
@@ -138,7 +138,13 @@
     gsap.to(w.querySelectorAll('.fl'), {
       y: 0, rotate: 0, duration: 1.3, ease: 'expo.out', stagger: { each: 0.035, from: 'start' },
       scrollTrigger: { trigger: w, start: 'top 95%', once: true },
-      onComplete: () => { gsap.set(w.querySelectorAll('.fl'), { clearProps: 'transform' }); w.classList.add('is-in'); }
+      // Mark it landed BEFORE clearing GSAP's inline transform, so the letters never
+      // fall back to their hidden start for a frame; hover smoothing switches on a frame later.
+      onComplete: () => {
+        w.classList.add('is-in');
+        gsap.set(w.querySelectorAll('.fl'), { clearProps: 'transform' });
+        requestAnimationFrame(() => requestAnimationFrame(() => w.classList.add('is-live')));
+      }
     });
   });
 
