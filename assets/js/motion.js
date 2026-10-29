@@ -46,23 +46,25 @@
     return;
   }
   gsap.registerPlugin(ST);
-  const intro = 0.45; // wait for the page curtain
+  // Animations for content already on screen wait for the loader to reveal the page.
+  const ready = (window.CBK && window.CBK.revealed) || Promise.resolve();
+  let isRevealed = false;
+  ready.then(() => { isRevealed = true; });
+  const onReady = (fn) => (isRevealed ? fn() : ready.then(fn));
 
   /* Headings: words rise into place */
   $$('[data-split]').forEach((el) => {
     const words = $$('.wi', el);
     const inView = el.getBoundingClientRect().top < window.innerHeight;
-    gsap.to(words, {
-      y: 0, yPercent: 0, duration: 1.25, ease: 'expo.out', stagger: 0.055,
-      delay: inView ? intro + (parseFloat(el.dataset.delay) || 0) : 0,
-      scrollTrigger: inView ? null : { trigger: el, start: 'top 88%', once: true }
-    });
+    const vars = { y: 0, yPercent: 0, duration: 1.3, ease: 'expo.out', stagger: 0.055 };
+    if (inView) onReady(() => gsap.to(words, { ...vars, delay: 0.05 + (parseFloat(el.dataset.delay) || 0) }));
+    else gsap.to(words, { ...vars, scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
   });
 
   /* Fade-up reveals, batched for a natural stagger */
   ST.batch('[data-reveal]', {
     start: 'top 90%', once: true,
-    onEnter: (els) => gsap.to(els, { opacity: 1, y: 0, duration: 1.1, ease: 'expo.out', stagger: 0.08, delay: els[0].getBoundingClientRect().top < window.innerHeight * 0.9 && performance.now() < 2500 ? intro : 0 })
+    onEnter: (els) => onReady(() => gsap.to(els, { opacity: 1, y: 0, duration: 1.1, ease: 'expo.out', stagger: 0.08, delay: 0.15 }))
   });
 
   /* Scroll-lit paragraphs */
@@ -97,8 +99,10 @@
       scrollTrigger: { trigger: card, start: 'top top', end: 'bottom top', scrub: true }
     });
   });
-  $$('.hero__float').forEach((f) => gsap.from(f, { x: 40, opacity: 0, duration: 1.2, ease: 'expo.out', delay: intro + 0.6 }));
-  $$('.hero__foot, .phero__foot').forEach((f) => gsap.from(f, { opacity: 0, y: 24, duration: 1.2, ease: 'expo.out', delay: intro + 0.35 }));
+  $$('.hero__float').forEach((f) => { const t = gsap.from(f, { x: 40, opacity: 0, duration: 1.2, ease: 'expo.out', delay: 0.7, paused: true }); onReady(() => t.play()); });
+  $$('.hero__foot, .phero__foot').forEach((f) => { const t = gsap.from(f, { opacity: 0, y: 24, duration: 1.2, ease: 'expo.out', delay: 0.4, paused: true }); onReady(() => t.play()); });
+  $$('.hero__slide:first-child img').forEach((img) => { const t = gsap.from(img, { scale: 1.3, duration: 2.6, ease: 'expo.out', paused: true, clearProps: 'transform' }); onReady(() => t.play()); });
+  $$('.phero__media img').forEach((img) => { const t = gsap.from(img, { scale: 1.2, duration: 2.4, ease: 'expo.out', paused: true }); onReady(() => t.play()); });
 
   /* Counters */
   $$('[data-count]').forEach((el) => {
@@ -154,7 +158,7 @@
   /* Mosaic & cards: gentle stagger in */
   ST.batch('.mosaic__item, .rv, .pkg, .fact, .card, .tile, .qcard, .reel__card', {
     start: 'top 92%', once: true,
-    onEnter: (els) => gsap.from(els, { y: 50, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: 0.07, clearProps: 'transform,opacity' })
+    onEnter: (els) => { const t = gsap.from(els, { y: 50, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: 0.07, clearProps: 'transform,opacity', paused: true }); onReady(() => t.play()); }
   });
 
   window.addEventListener('load', () => ST.refresh());
