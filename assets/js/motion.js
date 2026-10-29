@@ -56,7 +56,7 @@
   $$('[data-split]').forEach((el) => {
     const words = $$('.wi', el);
     const inView = el.getBoundingClientRect().top < window.innerHeight;
-    const vars = { y: 0, yPercent: 0, duration: 1.3, ease: 'expo.out', stagger: 0.055 };
+    const vars = { y: 0, yPercent: 0, duration: 1.2, ease: 'expo.out', stagger: { amount: Math.min(0.7, words.length * 0.055) }, onComplete: () => el.classList.add('is-in') };
     if (inView) onReady(() => gsap.to(words, { ...vars, delay: 0.05 + (parseFloat(el.dataset.delay) || 0) }));
     else gsap.to(words, { ...vars, scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
   });
