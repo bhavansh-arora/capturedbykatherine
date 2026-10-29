@@ -319,6 +319,78 @@
     input.addEventListener('change', run);
   });
 
+  /* ---------- Balanced masonry (galleries & reviews) ---------- */
+  // Places each item in the shortest column; photo galleries then trim the last
+  // photo of each column so every column ends on the same line.
+  function masonry(grid) {
+    if (!grid._items) {
+      grid._items = Array.from(grid.children);
+      grid._items.forEach((it, i) => { it.dataset.i = i; });
+    }
+    const cols = parseInt(getComputedStyle(grid).getPropertyValue('--cols'), 10) || 3;
+    const items = grid._items;
+    items.forEach((it) => { const img = $('img', it); if (img) img.style.height = ''; });
+    grid.classList.add('is-masonry', 'is-measuring');
+    const colEls = Array.from({ length: cols }, () => { const c = document.createElement('div'); c.className = 'masonry__col'; return c; });
+    grid.replaceChildren(...colEls);
+    const gap = parseFloat(getComputedStyle(colEls[0]).rowGap) || 0;
+    const colW = colEls[0].getBoundingClientRect().width;
+    const heights = new Array(cols).fill(0);
+    const natural = new Map();
+    items.forEach((it) => {
+      if (it.classList.contains('is-hidden')) { colEls[0].appendChild(it); return; }
+      const k = heights.indexOf(Math.min(...heights));
+      colEls[k].appendChild(it);
+      const img = it.classList.contains('mosaic__item') ? $('img', it) : null;
+      const h = img ? colW * (+img.getAttribute('height') / +img.getAttribute('width')) : it.getBoundingClientRect().height;
+      if (img) natural.set(it, h);
+      heights[k] += h + gap;
+    });
+    const visible = items.filter((it) => !it.classList.contains('is-hidden'));
+    // Small card grids: test every arrangement and keep the most even one
+    if (!natural.size && cols > 1 && visible.length <= 12) {
+      const hs = visible.map((it) => it.getBoundingClientRect().height + gap);
+      let best = null, bestSpread = Infinity;
+      const total = Math.pow(cols, visible.length);
+      for (let n = 0; n < total; n++) {
+        const sums = new Array(cols).fill(0); let x = n;
+        for (let i = 0; i < hs.length; i++) { sums[x % cols] += hs[i]; x = Math.floor(x / cols); }
+        const spread = Math.max(...sums) - Math.min(...sums);
+        if (spread < bestSpread - 0.5) { bestSpread = spread; best = n; }
+      }
+      let x = best;
+      visible.forEach((it) => { colEls[x % cols].appendChild(it); x = Math.floor(x / cols); });
+    }
+    if (natural.size && visible.length >= cols * 2) {
+      const target = heights.reduce((a, b) => a + b, 0) / cols;
+      colEls.forEach((c, k) => {
+        const last = Array.from(c.children).filter((it) => !it.classList.contains('is-hidden')).pop();
+        if (!last || !natural.has(last)) return;
+        const nh = natural.get(last);
+        $('img', last).style.height = Math.max(nh * 0.55, Math.min(nh * 1.7, nh + (target - heights[k]))) + 'px';
+      });
+    }
+    grid.classList.remove('is-measuring');
+    grid._cols = cols; grid._w = window.innerWidth;
+    if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+  }
+  const grids = $$('.mosaic, .rv-grid');
+  grids.forEach(masonry);
+  CBK.relayout = () => grids.forEach(masonry);
+  // Re-balance once real fonts and images are in, since text height depends on them
+  if (grids.length) {
+    if (document.fonts) document.fonts.ready.then(CBK.relayout);
+    window.addEventListener('load', CBK.relayout);
+  }
+  let mTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(mTimer);
+    mTimer = setTimeout(() => grids.forEach((g) => {
+      const cols = parseInt(getComputedStyle(g).getPropertyValue('--cols'), 10) || 3;
+      if (cols !== g._cols || Math.abs(window.innerWidth - g._w) > 40) masonry(g);
+    }), 180);
+  });
+
   /* ---------- Gallery filters ---------- */
   $$('[data-filters]').forEach((group) => {
     const target = $(group.dataset.filters);
@@ -327,7 +399,7 @@
       buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
       const f = b.dataset.filter;
       $$('[data-cat]', target).forEach((it) => it.classList.toggle('is-hidden', f !== 'all' && it.dataset.cat !== f));
-      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+      masonry(target);
     }));
     const pre = util.params().get('f');
     const btn = pre && buttons.find((b) => b.dataset.filter === pre);
@@ -335,7 +407,7 @@
   });
 
   /* ---------- Lightbox ---------- */
-  const lbItems = () => $$('[data-lb]').filter((a) => !a.classList.contains('is-hidden') && a.offsetParent !== null);
+  const lbItems = () => $$('[data-lb]').filter((a) => !a.classList.contains('is-hidden') && a.offsetParent !== null).sort((a, b) => (+a.dataset.i || 0) - (+b.dataset.i || 0));
   let lb, lbImg, lbCount, lbCap, lbIndex = 0, lbList = [], lastFocus;
   function buildLightbox() {
     lb = document.createElement('div');
