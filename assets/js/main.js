@@ -334,6 +334,33 @@
     });
   }
 
+  /* ---------- Date fields: same placeholder and icon on every device ---------- */
+  // Phones (iPhone in particular) show a blank box for an empty date field and ignore
+  // the placeholder attribute, so each date field gets its own placeholder + calendar icon.
+  const dateWraps = [];
+  $$('input[type="date"]').forEach((input) => {
+    const wrap = document.createElement('span');
+    wrap.className = 'date-wrap';
+    input.parentNode.insertBefore(wrap, input);
+    wrap.appendChild(input);
+    const ph = document.createElement('span');
+    ph.className = 'date-ph';
+    ph.setAttribute('aria-hidden', 'true');
+    ph.textContent = input.dataset.placeholder || 'Choose your date';
+    wrap.appendChild(ph);
+    wrap.insertAdjacentHTML('beforeend', '<svg class="date-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>');
+    if (!input.getAttribute('aria-label') && !input.id) input.setAttribute('aria-label', ph.textContent);
+    const sync = () => wrap.classList.toggle('is-empty', !input.value);
+    input.addEventListener('input', sync);
+    input.addEventListener('change', sync);
+    dateWraps.push(sync);
+    sync();
+  });
+  // Other scripts fill some dates in (planner, links from other pages), so re-check once they've run
+  const syncDates = () => dateWraps.forEach((fn) => fn());
+  document.addEventListener('DOMContentLoaded', syncDates);
+  window.addEventListener('pageshow', syncDates);
+
   /* ---------- Open the calendar / time picker on any click in the field ---------- */
   // Browsers only open it from the small icon by default; showPicker() opens it from anywhere.
   const PICKER = 'input[type="date"], input[type="time"]';

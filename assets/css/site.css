@@ -520,6 +520,19 @@ a:hover .arrow-btn, .arrow-btn:hover { background: var(--white); color: var(--in
 .datecheck__row { display: flex; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(255, 250, 243, .12); box-shadow: inset 0 0 0 1px rgba(255, 250, 243, .22); }
 .datecheck input { flex: 1; min-width: 0; background: transparent; border: 0; padding: 0 16px; height: 44px; color: inherit; font-size: 15px; font-weight: 500; color-scheme: dark; }
 .datecheck input:focus { outline: none; }
+/* Date fields: our own placeholder + icon so empty fields never look blank on phones */
+.date-wrap { position: relative; display: block; min-width: 0; color: inherit; }
+.datecheck .date-wrap { flex: 1; display: flex; }
+.date-wrap input[type="date"] { position: relative; width: 100%; -webkit-appearance: none; appearance: none; text-align: left; padding-right: 46px !important; }
+.date-wrap input[type="date"]::-webkit-date-and-time-value { text-align: left; }
+.date-wrap input[type="date"]::-webkit-calendar-picker-indicator { position: absolute; inset: 0; width: auto; height: auto; margin: 0; padding: 0; opacity: 0; cursor: pointer; }
+.date-wrap.is-empty input[type="date"]:not(:focus), .date-wrap.is-empty input[type="date"]:not(:focus)::-webkit-datetime-edit { color: transparent !important; }
+.date-ph { position: absolute; left: 16px; right: 46px; top: 50%; transform: translateY(-50%); pointer-events: none; font-size: 15px; font-weight: 500; line-height: 1.2; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0; transition: opacity .2s; }
+.date-wrap.is-empty .date-ph { opacity: 1; }
+.date-wrap.is-empty input:focus ~ .date-ph { opacity: 0; }
+.date-ic { position: absolute; right: 16px; top: 50%; width: 18px; height: 18px; transform: translateY(-50%); pointer-events: none; opacity: .75; }
+.datecheck--dark .date-ph, .tile--copper .date-ph, .panel--dark .date-ph { color: rgba(255, 246, 235, .66); }
+@media (max-width: 760px) { .datecheck input, .date-ph { font-size: 16px; } }
 .datecheck__row:focus-within { box-shadow: inset 0 0 0 1px rgba(255, 250, 243, .55); }
 .datecheck--light .datecheck__row { background: var(--card); box-shadow: inset 0 0 0 1px var(--line-strong); }
 .datecheck--light input { color-scheme: light; }
