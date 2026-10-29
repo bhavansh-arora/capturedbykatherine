@@ -95,14 +95,23 @@
     if (lenis) lenis.start();
     markRevealed();
   };
-  const PAGE_NAMES = {
-    '': 'Home', index: 'Home', about: 'About', weddings: 'Weddings', family: 'Family', formals: 'Formals',
-    investment: 'Investment', portfolio: 'Portfolio', reviews: 'Kind words', planner: 'Day planner', enquire: 'Let’s talk', '404': 'Oops'
+  // Each page is a "chapter" in the transition panel
+  const PAGES = {
+    '': ['Home', '01'], index: ['Home', '01'], about: ['About', '02'], weddings: ['Weddings', '03'], family: ['Family', '04'],
+    formals: ['Formals', '05'], investment: ['Investment', '06'], portfolio: ['Portfolio', '07'], reviews: ['Kind words', '08'],
+    planner: ['Day planner', '09'], enquire: ['Let’s talk', '10'], '404': ['Lost', '00']
   };
-  const pageName = (url) => PAGE_NAMES[(url.pathname.split('/').pop() || '').replace(/\.html$/, '')] || 'Captured by Katherine';
+  const pageInfo = (url) => PAGES[(url.pathname.split('/').pop() || '').replace(/\.html$/, '')] || ['Captured by Katherine', '00'];
+
+  // Wait until the page underneath is ready to be seen (fonts + hero photo), max 900ms
+  function pageReady() {
+    const hero = document.querySelector('img[fetchpriority="high"]');
+    const jobs = [document.fonts ? document.fonts.ready : null, hero && hero.decode ? hero.decode().catch(() => {}) : null].filter(Boolean);
+    return Promise.race([Promise.all(jobs), new Promise((r) => setTimeout(r, 900))]);
+  }
 
   function liftLoader() {
-    requestAnimationFrame(() => requestAnimationFrame(() => {
+    pageReady().then(() => requestAnimationFrame(() => {
       loader.classList.add('is-lift');
       setTimeout(reveal, 260);
       setTimeout(() => loader.classList.add('is-done'), 1150);
@@ -154,7 +163,7 @@
           onComplete: () => { loader.classList.add('is-done'); loader.classList.remove('is-iris', 'is-shutter'); }
         });
         setTimeout(reveal, 420);
-      }, 380);
+      }, 200);
     }
   }
 
@@ -182,14 +191,30 @@
     if (!loader || reduced) return;
     e.preventDefault();
     closeMenu();
-    const name = pageName(url);
-    $('.loader__page span', loader).textContent = name;
-    try { sessionStorage.setItem('cbk-nav', name); } catch (err) { /* storage unavailable */ }
-    loader.className = 'loader mode-nav is-below';
+    const [name, num] = pageInfo(url);
+    window.CBK_LABEL(name, num);
+    try { sessionStorage.setItem('cbk-nav', JSON.stringify({ n: name, k: num })); } catch (err) { /* storage unavailable */ }
+    loader.style.removeProperty('--iris');
+    loader.className = 'loader mode-nav is-entering is-below';
     void loader.offsetWidth;
     loader.classList.remove('is-below');
-    setTimeout(() => { location.href = url.href; }, 820);
+    // Leave only once the panel has fully closed and the title has settled,
+    // so the next page can open on exactly this frame.
+    setTimeout(() => { location.href = url.href; }, 1080);
   });
+
+  // Start fetching a page as soon as someone shows intent to visit it
+  const prefetched = new Set();
+  const prefetch = (e) => {
+    const a = e.target.closest && e.target.closest('a[href$=".html"], a[href*=".html?"]');
+    if (!a || a.target === '_blank') return;
+    const url = new URL(a.getAttribute('href'), location.href);
+    if (url.origin !== location.origin || prefetched.has(url.pathname)) return;
+    prefetched.add(url.pathname);
+    const l = document.createElement('link'); l.rel = 'prefetch'; l.href = url.pathname; document.head.appendChild(l);
+  };
+  document.addEventListener('pointerover', prefetch, { passive: true });
+  document.addEventListener('touchstart', prefetch, { passive: true });
 
   /* ---------- Navigation ---------- */
   const nav = $('[data-nav-root]');
@@ -231,6 +256,24 @@
   if (menu) menu.setAttribute('inert', '');
   if (burger) burger.addEventListener('click', () => (document.body.classList.contains('menu-open') ? closeMenu() : openMenu()));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+
+  /* ---------- Footer wordmark: letters lift around the cursor ---------- */
+  const fword = $('.footer__word');
+  if (fword && finePointer && !reduced) {
+    const letters = $$('.fl', fword);
+    let raf = 0, mx = null;
+    const paint = () => {
+      raf = 0;
+      letters.forEach((l) => {
+        if (mx === null) { l.style.setProperty('--lift', 0); return; }
+        const r = l.getBoundingClientRect();
+        const d = Math.abs(r.left + r.width / 2 - mx);
+        l.style.setProperty('--lift', Math.max(0, 1 - d / 160).toFixed(3));
+      });
+    };
+    fword.addEventListener('pointermove', (e) => { mx = e.clientX; if (!raf) raf = requestAnimationFrame(paint); });
+    fword.addEventListener('pointerleave', () => { mx = null; if (!raf) raf = requestAnimationFrame(paint); });
+  }
 
   /* ---------- Back to top & year ---------- */
   $$('[data-top]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); CBK.scrollTo(0); }));
@@ -290,6 +333,19 @@
       el.addEventListener('pointerleave', () => { el.style.transform = ''; });
     });
   }
+
+  /* ---------- Open the calendar / time picker on any click in the field ---------- */
+  // Browsers only open it from the small icon by default; showPicker() opens it from anywhere.
+  const PICKER = 'input[type="date"], input[type="time"]';
+  document.addEventListener('click', (e) => {
+    let input = e.target.closest(PICKER);
+    if (!input) {
+      const row = e.target.closest('.datecheck__row');
+      if (row && !e.target.closest('button')) input = row.querySelector(PICKER);
+    }
+    if (!input || input.disabled || input.readOnly || typeof input.showPicker !== 'function') return;
+    try { input.focus({ preventScroll: true }); input.showPicker(); } catch (err) { /* picker already open or unsupported */ }
+  });
 
   /* ---------- Date availability checker ---------- */
   CBK.checkDate = function (value) {

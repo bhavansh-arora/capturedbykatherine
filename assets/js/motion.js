@@ -40,6 +40,7 @@
   const gsap = window.gsap, ST = window.ScrollTrigger;
   if (!gsap || !ST || reduced) {
     $$('[data-split]').forEach((el) => el.classList.add('is-in'));
+    $$('.footer__word').forEach((el) => el.classList.add('is-in'));
     $$('[data-reveal]').forEach((el) => { el.style.opacity = 1; el.style.transform = 'none'; });
     $$('[data-clip]').forEach((el) => { el.style.clipPath = 'none'; });
     $$('.lw').forEach((el) => { el.style.opacity = 1; });
@@ -133,7 +134,13 @@
   });
 
   /* Footer wordmark rises */
-  $$('.footer__word').forEach((w) => gsap.from(w, { yPercent: 40, opacity: 0, ease: 'expo.out', duration: 1.6, scrollTrigger: { trigger: w, start: 'top 98%', once: true } }));
+  $$('.footer__word').forEach((w) => {
+    gsap.to(w.querySelectorAll('.fl'), {
+      y: 0, rotate: 0, duration: 1.3, ease: 'expo.out', stagger: { each: 0.035, from: 'start' },
+      scrollTrigger: { trigger: w, start: 'top 95%', once: true },
+      onComplete: () => { gsap.set(w.querySelectorAll('.fl'), { clearProps: 'transform' }); w.classList.add('is-in'); }
+    });
+  });
 
   /* Horizontal reel (desktop): pin and scroll sideways */
   const mm = gsap.matchMedia();
