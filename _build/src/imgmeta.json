@@ -1,0 +1,632 @@
+{
+"katherine": {
+"w": 1024,
+"h": 651,
+"c": "#bc9d7c",
+"o": "l"
+},
+"family-big-group": {
+"w": 1707,
+"h": 2560,
+"c": "#948f85",
+"o": "p"
+},
+"formal-red-carpet": {
+"w": 1706,
+"h": 2560,
+"c": "#6e5a53",
+"o": "p"
+},
+"wedding-bride-bouquet": {
+"w": 1707,
+"h": 2560,
+"c": "#a59f8e",
+"o": "p"
+},
+"formal-red-dress": {
+"w": 1681,
+"h": 2560,
+"c": "#806950",
+"o": "p"
+},
+"wedding-veranda-kiss": {
+"w": 1707,
+"h": 2560,
+"c": "#aea99f",
+"o": "p"
+},
+"wedding-bride-chair": {
+"w": 1707,
+"h": 2560,
+"c": "#b0aba9",
+"o": "p"
+},
+"family-extended-dog": {
+"w": 2560,
+"h": 1670,
+"c": "#6e726e",
+"o": "l"
+},
+"family-baby-mum": {
+"w": 2560,
+"h": 1707,
+"c": "#666765",
+"o": "l"
+},
+"family-kids-running": {
+"w": 1365,
+"h": 2048,
+"c": "#a79f91",
+"o": "p"
+},
+"family-dad-kiss-baby": {
+"w": 2560,
+"h": 1707,
+"c": "#8d897e",
+"o": "l"
+},
+"family-teens-hug": {
+"w": 2560,
+"h": 1707,
+"c": "#918e8f",
+"o": "l"
+},
+"family-golden-couple-baby": {
+"w": 1707,
+"h": 2560,
+"c": "#827d74",
+"o": "p"
+},
+"family-golden-kiss": {
+"w": 2560,
+"h": 1707,
+"c": "#9e9b97",
+"o": "l"
+},
+"family-sunset-group": {
+"w": 2560,
+"h": 1707,
+"c": "#a79d94",
+"o": "l"
+},
+"family-bw-play": {
+"w": 2560,
+"h": 1707,
+"c": "#5d5d5d",
+"o": "l"
+},
+"family-church": {
+"w": 1707,
+"h": 2560,
+"c": "#a79e9c",
+"o": "p"
+},
+"family-mum-son": {
+"w": 1707,
+"h": 2560,
+"c": "#c8c1be",
+"o": "p"
+},
+"family-garden-jump": {
+"w": 1701,
+"h": 2560,
+"c": "#67664c",
+"o": "p"
+},
+"family-grandparents": {
+"w": 2560,
+"h": 1707,
+"c": "#5e4f49",
+"o": "l"
+},
+"family-girl-dog": {
+"w": 1707,
+"h": 2560,
+"c": "#73755a",
+"o": "p"
+},
+"family-hands-bw": {
+"w": 2560,
+"h": 1707,
+"c": "#7b7b7b",
+"o": "l"
+},
+"family-golden-trees": {
+"w": 1707,
+"h": 2560,
+"c": "#7c7257",
+"o": "p"
+},
+"family-grandpa-hug": {
+"w": 2560,
+"h": 1707,
+"c": "#7b6d52",
+"o": "l"
+},
+"family-girl-guitar": {
+"w": 1707,
+"h": 2560,
+"c": "#8e7c60",
+"o": "p"
+},
+"family-sisters": {
+"w": 2560,
+"h": 1707,
+"c": "#aba4a3",
+"o": "l"
+},
+"family-girl-puppy": {
+"w": 1440,
+"h": 960,
+"c": "#a0856f",
+"o": "l"
+},
+"family-flowers": {
+"w": 2560,
+"h": 1361,
+"c": "#887c56",
+"o": "l"
+},
+"family-newborn": {
+"w": 1707,
+"h": 2560,
+"c": "#938d85",
+"o": "p"
+},
+"family-bridge-walk": {
+"w": 854,
+"h": 1280,
+"c": "#5e5950",
+"o": "p"
+},
+"family-sisters-portrait": {
+"w": 1707,
+"h": 2560,
+"c": "#ab948c",
+"o": "p"
+},
+"family-beach": {
+"w": 2560,
+"h": 1707,
+"c": "#bcc5cb",
+"o": "l"
+},
+"family-baby-cuddle": {
+"w": 2560,
+"h": 1707,
+"c": "#7d6a5d",
+"o": "l"
+},
+"family-beach-group": {
+"w": 2560,
+"h": 1706,
+"c": "#86b9d5",
+"o": "l"
+},
+"family-dad-shoulders": {
+"w": 2560,
+"h": 1707,
+"c": "#868d6b",
+"o": "l"
+},
+"family-friends": {
+"w": 1860,
+"h": 2560,
+"c": "#605e51",
+"o": "p"
+},
+"family-tree": {
+"w": 1600,
+"h": 1066,
+"c": "#877a67",
+"o": "l"
+},
+"formal-couple-hedge": {
+"w": 2560,
+"h": 1707,
+"c": "#524a3e",
+"o": "l"
+},
+"formal-group-colour": {
+"w": 2560,
+"h": 1706,
+"c": "#4e524e",
+"o": "l"
+},
+"formal-green-dress": {
+"w": 1707,
+"h": 2560,
+"c": "#728171",
+"o": "p"
+},
+"formal-laneway-group": {
+"w": 1707,
+"h": 2560,
+"c": "#746868",
+"o": "p"
+},
+"formal-portrait-dark": {
+"w": 1707,
+"h": 2560,
+"c": "#485255",
+"o": "p"
+},
+"formal-corsage": {
+"w": 2560,
+"h": 1707,
+"c": "#534c39",
+"o": "l"
+},
+"formal-couple-stairs": {
+"w": 1707,
+"h": 2560,
+"c": "#646354",
+"o": "p"
+},
+"formal-gold-dress": {
+"w": 1707,
+"h": 2560,
+"c": "#5d513b",
+"o": "p"
+},
+"formal-red-shoulder": {
+"w": 1707,
+"h": 2560,
+"c": "#7a6859",
+"o": "p"
+},
+"formal-umbrella": {
+"w": 1707,
+"h": 2560,
+"c": "#7e7a62",
+"o": "p"
+},
+"formal-bw-boy": {
+"w": 2560,
+"h": 1707,
+"c": "#898989",
+"o": "l"
+},
+"formal-girls-group": {
+"w": 2560,
+"h": 1707,
+"c": "#71686a",
+"o": "l"
+},
+"formal-velvet-laneway": {
+"w": 1707,
+"h": 2560,
+"c": "#5e5b5b",
+"o": "p"
+},
+"formal-pool-group": {
+"w": 2560,
+"h": 1707,
+"c": "#586f6d",
+"o": "l"
+},
+"formal-couple-sequin": {
+"w": 1707,
+"h": 2560,
+"c": "#5f6063",
+"o": "p"
+},
+"formal-friends-backs": {
+"w": 1707,
+"h": 2560,
+"c": "#7a6d4f",
+"o": "p"
+},
+"formal-dresses-backs": {
+"w": 2560,
+"h": 1707,
+"c": "#695a4e",
+"o": "l"
+},
+"formal-pastel-group": {
+"w": 2048,
+"h": 1365,
+"c": "#816765",
+"o": "l"
+},
+"wedding-field-cowboy": {
+"w": 2560,
+"h": 1707,
+"c": "#86857f",
+"o": "l"
+},
+"wedding-sunset-silhouette": {
+"w": 2560,
+"h": 1707,
+"c": "#766056",
+"o": "l"
+},
+"wedding-bridge": {
+"w": 2560,
+"h": 1707,
+"c": "#727373",
+"o": "l"
+},
+"couple-anique-craig": {
+"w": 1707,
+"h": 2560,
+"c": "#67665b",
+"o": "p"
+},
+"couple-camille-joel": {
+"w": 1707,
+"h": 2560,
+"c": "#79766c",
+"o": "p"
+},
+"couple-danni-ben": {
+"w": 1707,
+"h": 2560,
+"c": "#968a80",
+"o": "p"
+},
+"couple-fountain": {
+"w": 1707,
+"h": 2560,
+"c": "#929076",
+"o": "p"
+},
+"couple-veranda": {
+"w": 1707,
+"h": 2560,
+"c": "#aea99f",
+"o": "p"
+},
+"couple-garden-walk": {
+"w": 1707,
+"h": 2560,
+"c": "#5e6860",
+"o": "p"
+},
+"couple-lauren-anthony": {
+"w": 1707,
+"h": 2560,
+"c": "#68584c",
+"o": "p"
+},
+"couple-rachel-matthew": {
+"w": 1707,
+"h": 2560,
+"c": "#73795f",
+"o": "p"
+},
+"couple-lee-michael": {
+"w": 1707,
+"h": 2560,
+"c": "#747e78",
+"o": "p"
+},
+"couple-sarah-grant": {
+"w": 1707,
+"h": 2560,
+"c": "#a79e7e",
+"o": "p"
+},
+"wedding-rings-bw": {
+"w": 2560,
+"h": 1707,
+"c": "#727272",
+"o": "l"
+},
+"wedding-groom-letter": {
+"w": 2560,
+"h": 1707,
+"c": "#a2988a",
+"o": "l"
+},
+"wedding-bridesmaids-arbour": {
+"w": 1706,
+"h": 2560,
+"c": "#676f59",
+"o": "p"
+},
+"wedding-flowergirls": {
+"w": 1707,
+"h": 2560,
+"c": "#a0938b",
+"o": "p"
+},
+"wedding-forest-walk": {
+"w": 1707,
+"h": 2560,
+"c": "#7d7e71",
+"o": "p"
+},
+"wedding-forest-party": {
+"w": 1707,
+"h": 2560,
+"c": "#7a7a6a",
+"o": "p"
+},
+"wedding-hangers": {
+"w": 2560,
+"h": 1707,
+"c": "#7a6b61",
+"o": "l"
+},
+"wedding-bride-robe": {
+"w": 1707,
+"h": 2560,
+"c": "#a9a091",
+"o": "p"
+},
+"wedding-dancefloor-bw": {
+"w": 1707,
+"h": 2560,
+"c": "#666666",
+"o": "p"
+},
+"wedding-little-photographer": {
+"w": 1707,
+"h": 2560,
+"c": "#707070",
+"o": "p"
+},
+"wedding-festoon": {
+"w": 2560,
+"h": 1707,
+"c": "#626262",
+"o": "l"
+},
+"wedding-pier": {
+"w": 2560,
+"h": 1745,
+"c": "#c8cbd0",
+"o": "l"
+},
+"wedding-flowergirl": {
+"w": 2560,
+"h": 1707,
+"c": "#b6b2b0",
+"o": "l"
+},
+"wedding-party-golden": {
+"w": 2560,
+"h": 1707,
+"c": "#787a4f",
+"o": "l"
+},
+"wedding-veil": {
+"w": 2560,
+"h": 1707,
+"c": "#746f61",
+"o": "l"
+},
+"wedding-embrace": {
+"w": 2560,
+"h": 1707,
+"c": "#6d6447",
+"o": "l"
+},
+"wedding-aisle": {
+"w": 2560,
+"h": 1707,
+"c": "#85635a",
+"o": "l"
+},
+"wedding-golden-hour": {
+"w": 2560,
+"h": 1707,
+"c": "#89816f",
+"o": "l"
+},
+"wedding-roses-kiss": {
+"w": 2560,
+"h": 1707,
+"c": "#948d62",
+"o": "l"
+},
+"wedding-rocks": {
+"w": 2560,
+"h": 1707,
+"c": "#7d7472",
+"o": "l"
+},
+"wedding-dusk-beach": {
+"w": 1235,
+"h": 690,
+"c": "#72706e",
+"o": "l"
+},
+"wedding-tree-kiss": {
+"w": 2560,
+"h": 1707,
+"c": "#938f65",
+"o": "l"
+},
+"wedding-laughing": {
+"w": 2560,
+"h": 1707,
+"c": "#777650",
+"o": "l"
+},
+"wedding-lupins": {
+"w": 2560,
+"h": 1707,
+"c": "#757475",
+"o": "l"
+},
+"wedding-columns": {
+"w": 2560,
+"h": 1707,
+"c": "#72755e",
+"o": "l"
+},
+"wedding-boutonniere": {
+"w": 2560,
+"h": 1707,
+"c": "#58584a",
+"o": "l"
+},
+"wedding-makeup-bw": {
+"w": 2560,
+"h": 1707,
+"c": "#b3b3b3",
+"o": "l"
+},
+"wedding-bridesmaids-colour": {
+"w": 2560,
+"h": 1707,
+"c": "#846a67",
+"o": "l"
+},
+"wedding-hands-bw": {
+"w": 2560,
+"h": 1707,
+"c": "#575757",
+"o": "l"
+},
+"wedding-party-floral": {
+"w": 2560,
+"h": 1707,
+"c": "#8a8075",
+"o": "l"
+},
+"wedding-bride-bw": {
+"w": 2560,
+"h": 1707,
+"c": "#6b6b6b",
+"o": "l"
+},
+"wedding-father-kiss": {
+"w": 2560,
+"h": 1707,
+"c": "#827d7d",
+"o": "l"
+},
+"wedding-couple-portrait": {
+"w": 1707,
+"h": 2560,
+"c": "#7b8186",
+"o": "p"
+},
+"wedding-party-walk": {
+"w": 2560,
+"h": 1541,
+"c": "#807a73",
+"o": "l"
+},
+"wedding-shoes": {
+"w": 2560,
+"h": 1703,
+"c": "#95a1b5",
+"o": "l"
+},
+"wedding-roses-couple": {
+"w": 2560,
+"h": 1707,
+"c": "#5a633f",
+"o": "l"
+},
+"wedding-avenue": {
+"w": 2560,
+"h": 1706,
+"c": "#5b6246",
+"o": "l"
+}
+}

@@ -1,0 +1,95 @@
+<!--- {"title":"Wedding Day Timeline Planner · Captured by Katherine","description":"A free wedding-day photo timeline builder from a former wedding planner. Enter your ceremony time and get a full schedule timed to Brisbane's golden hour, plus the right coverage.","theme":"light","nav":"planner","ogimage":"wedding-festoon"} --->
+    <section class="lhero" aria-labelledby="p-title">
+      <div class="container">
+        <div class="shead"><span class="eyebrow eyebrow--copper"><i class="pulse"></i> Free tool · Wedding-day planner</span><span class="eyebrow">By a former wedding planner</span></div>
+        <div class="lhero__row">
+          <h1 class="display-xl lhero__title" id="p-title" data-split>Plan the day like <em>a planner would.</em></h1>
+          <p class="lead">Pop in your ceremony and reception times. You’ll get a photo-friendly timeline built around Brisbane’s golden hour, the coverage you need and the collection that fits.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--flush-top" aria-label="Planner" data-planner>
+      <div class="container">
+        <div class="tool">
+          <form class="panel" novalidate>
+            <h2 class="panel__title">Your <em>day.</em></h2>
+            <div class="fields" style="margin-top:26px">
+              <div class="field field--full">
+                <label for="p-date">Wedding date</label>
+                <input type="date" id="p-date" name="date">
+              </div>
+              <div class="field">
+                <label for="p-cer">Ceremony starts</label>
+                <input type="time" id="p-cer" name="ceremony" value="15:00" step="300">
+              </div>
+              <div class="field">
+                <label for="p-len">Ceremony length</label>
+                <select id="p-len" name="cerlen"><option value="20">20 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select>
+              </div>
+              <div class="field">
+                <label for="p-travel">Travel to reception</label>
+                <select id="p-travel" name="travel"><option value="0">Same venue</option><option value="15" selected>15 minutes</option><option value="30">30 minutes</option><option value="45">45 minutes</option></select>
+              </div>
+              <div class="field">
+                <label for="p-rec">Reception starts</label>
+                <input type="time" id="p-rec" name="reception" value="18:00" step="300">
+              </div>
+              <fieldset class="field field--full">
+                <legend>Family photos</legend>
+                <div class="seg">
+                  <label><input type="radio" name="family" value="small" checked><span>Small (under 10 groupings)</span></label>
+                  <label><input type="radio" name="family" value="large"><span>Large family</span></label>
+                </div>
+              </fieldset>
+              <fieldset class="field field--full">
+                <legend>Include</legend>
+                <div class="chips">
+                  <label><input type="checkbox" name="prep" checked><span>Getting ready</span></label>
+                  <label><input type="checkbox" name="firstlook"><span>A first look</span></label>
+                </div>
+              </fieldset>
+              <fieldset class="field field--full">
+                <legend>Photograph until</legend>
+                <div class="seg">
+                  <label><input type="radio" name="until" value="dance" checked><span>First dance</span></label>
+                  <label><input type="radio" name="until" value="party"><span>Dancefloor</span></label>
+                  <label><input type="radio" name="until" value="sendoff"><span>Send-off</span></label>
+                </div>
+              </fieldset>
+            </div>
+            <div class="tool__actions no-print">
+              <button type="button" class="btn btn--ghost btn--sm" data-print><span>Print or save as PDF</span></button>
+            </div>
+          </form>
+          <div class="panel panel--dark" data-planner-out aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--paper2" aria-labelledby="p-tips">
+      <div class="container">
+        <div class="shead"><span class="eyebrow">Planner’s notes</span><span class="eyebrow">From 16 years of wedding days</span></div>
+        <div class="head-split">
+          <h2 class="display-l" id="p-tips" data-split>Little things that <em>change everything.</em></h2>
+          <p class="lead">Katherine builds a custom timeline with every couple at the venue consultation. These are the notes she always shares.</p>
+        </div>
+        <div class="cards-3">
+          <article class="card">
+            <span class="card__num">01 · Light</span>
+            <h3>Follow <em>the sun.</em></h3>
+            <p>Queensland sunsets come early in winter. Timing portraits for the hour before sunset gives you that warm, glowing light everyone loves.</p>
+          </article>
+          <article class="card">
+            <span class="card__num">02 · Buffer</span>
+            <h3>Build in <em>breathing room.</em></h3>
+            <p>Add 15 minutes of buffer around family photos and travel. Relaxed couples make for the most natural images.</p>
+          </article>
+          <article class="card">
+            <span class="card__num">03 · Weather</span>
+            <h3>Always have <em>a plan B.</em></h3>
+            <p>Walk the venue together and pick a covered spot for portraits. Then if the clouds roll in, nobody panics.</p>
+          </article>
+        </div>
+      </div>
+    </section>
