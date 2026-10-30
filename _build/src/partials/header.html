@@ -7,9 +7,14 @@
       </a>
       <nav class="nav__links" aria-label="Primary">
         <a href="about.html" data-nav="about">About</a>
-        <a href="weddings.html" data-nav="weddings">Weddings</a>
-        <a href="family.html" data-nav="family">Family</a>
-        <a href="formals.html" data-nav="formals">Formals</a>
+        <div class="nav__group">
+          <button type="button" class="nav__trigger" aria-expanded="false" aria-controls="nav-sessions">Sessions <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="nav__drop" id="nav-sessions">
+            <a class="nav__card" href="weddings.html" data-nav="weddings"><x-img name="wedding-golden-hour" alt="" sizes="180px" /><strong>Weddings</strong><span>From $950 · 2 to 10 hours</span></a>
+            <a class="nav__card" href="family.html" data-nav="family"><x-img name="family-golden-kiss" alt="" sizes="180px" /><strong>Family</strong><span>From $550 · golden hour</span></a>
+            <a class="nav__card" href="formals.html" data-nav="formals"><x-img name="formal-couple-hedge" alt="" sizes="180px" /><strong>Formals</strong><span>$750 · groups &amp; couples</span></a>
+          </div>
+        </div>
         <a href="investment.html" data-nav="investment">Investment</a>
         <a href="portfolio.html" data-nav="portfolio">Portfolio</a>
         <a href="reviews.html" data-nav="reviews">Kind words</a>
@@ -26,13 +31,14 @@
       <nav class="menu__links" aria-label="Mobile">
         <a href="index.html"><span>01</span>Home</a>
         <a href="about.html"><span>02</span>About</a>
-        <a href="weddings.html"><span>03</span>Weddings</a>
-        <a href="family.html"><span>04</span>Family</a>
-        <a href="formals.html"><span>05</span>Formals</a>
-        <a href="investment.html"><span>06</span>Investment</a>
-        <a href="portfolio.html"><span>07</span>Portfolio</a>
-        <a href="reviews.html"><span>08</span>Kind words</a>
-        <a href="planner.html"><span>09</span>Day planner <em class="nav__new">New</em></a>
+        <div class="menu__group">
+          <p class="menu__label"><span>03</span>Sessions</p>
+          <div class="menu__sub"><a href="weddings.html">Weddings</a><a href="family.html">Family</a><a href="formals.html">Formals</a></div>
+        </div>
+        <a href="investment.html"><span>04</span>Investment</a>
+        <a href="portfolio.html"><span>05</span>Portfolio</a>
+        <a href="reviews.html"><span>06</span>Kind words</a>
+        <a href="planner.html"><span>07</span>Day planner <em class="nav__new">New</em></a>
       </nav>
       <div class="menu__foot">
         <a class="btn btn--copper" href="enquire.html"><span>Check your date</span><i class="btn__dot" aria-hidden="true"></i></a>

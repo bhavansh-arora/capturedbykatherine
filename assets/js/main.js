@@ -253,6 +253,22 @@
     menu.setAttribute('inert', '');
     if (lenis) lenis.start(); else document.documentElement.style.overflow = '';
   }
+  /* Sessions dropdown: hover on desktop, click/tap or keyboard everywhere */
+  $$('.nav__group').forEach((g) => {
+    const btn = $('.nav__trigger', g);
+    let timer;
+    const open = (v) => { clearTimeout(timer); g.classList.toggle('is-open', v); btn.setAttribute('aria-expanded', String(v)); };
+    btn.addEventListener('click', (e) => { e.stopPropagation(); open(!g.classList.contains('is-open')); });
+    if (finePointer) {
+      g.addEventListener('pointerenter', () => open(true));
+      g.addEventListener('pointerleave', () => { timer = setTimeout(() => open(false), 200); });
+    }
+    g.addEventListener('focusout', (e) => { if (!g.contains(e.relatedTarget)) open(false); });
+    document.addEventListener('click', (e) => { if (!g.contains(e.target)) open(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && g.classList.contains('is-open')) { open(false); btn.focus(); } });
+    window.addEventListener('scroll', () => { if (g.classList.contains('is-open') && window.scrollY > 120) open(false); }, { passive: true });
+  });
+
   if (menu) menu.setAttribute('inert', '');
   if (burger) burger.addEventListener('click', () => (document.body.classList.contains('menu-open') ? closeMenu() : openMenu()));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
