@@ -89,7 +89,7 @@
   $$('[data-clip]').forEach((el) => {
     gsap.to(el, {
       clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none',
-      scrollTrigger: { trigger: el, start: 'top 95%', end: 'top 35%', scrub: 0.6 }
+      scrollTrigger: { trigger: el, start: 'top 98%', end: 'top 62%', scrub: 0.6 }
     });
   });
 

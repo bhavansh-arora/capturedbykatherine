@@ -38,7 +38,10 @@ function img(a) {
   const extra = Object.entries(a)
     .filter(([k]) => !['name', 'alt', 'sizes', 'xl', 'eager', 'class', 'style'].includes(k))
     .map(([k, v]) => (v === '' ? ` ${k}` : ` ${k}="${v}"`)).join('');
-  return `<img src="assets/img/${a.name}-lg.webp" srcset="${set.join(', ')}" sizes="${a.sizes || '100vw'}" width="${w}" height="${h}" alt="${a.alt || ''}"${a.class ? ` class="${a.class}"` : ''} style="background-color:${m.c};${a.style || ''}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${extra}>`;
+  // A photo's focal point (fy, % from the top) keeps every crop centred on the people
+  let style = a.style || '';
+  if (m.fy !== undefined) style = `object-position:${m.fx ?? 50}% ${m.fy}%;` + style.replace(/object-position:[^;]*;?/g, '');
+  return `<img src="assets/img/${a.name}-lg.webp" srcset="${set.join(', ')}" sizes="${a.sizes || '100vw'}" width="${w}" height="${h}" alt="${a.alt || ''}"${a.class ? ` class="${a.class}"` : ''} style="background-color:${m.c};${style}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${extra}>`;
 }
 
 const files = readdirSync(join(src, 'pages')).filter((f) => f.endsWith('.html'));
