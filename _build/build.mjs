@@ -40,8 +40,10 @@ function img(a) {
     .map(([k, v]) => (v === '' ? ` ${k}` : ` ${k}="${v}"`)).join('');
   // A photo's focal point (fy, % from the top) keeps every crop centred on the people
   let style = a.style || '';
-  if (m.fy !== undefined) style = `object-position:${m.fx ?? 50}% ${m.fy}%;` + style.replace(/object-position:[^;]*;?/g, '');
-  return `<img src="assets/img/${a.name}-lg.webp" srcset="${set.join(', ')}" sizes="${a.sizes || '100vw'}" width="${w}" height="${h}" alt="${a.alt || ''}"${a.class ? ` class="${a.class}"` : ''} style="background-color:${m.c};${style}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${extra}>`;
+  // With JS, main.js keeps the faces in view for whatever frame the photo is in; this is the no-JS fallback.
+  let fyAttr = '';
+  if (m.fy !== undefined) { style = `object-position:50% ${Math.round(m.fy * 0.75)}%;` + style.replace(/object-position:[^;]*;?/g, ''); fyAttr = ` data-fy="${m.fy}"`; }
+  return `<img src="assets/img/${a.name}-lg.webp" srcset="${set.join(', ')}" sizes="${a.sizes || '100vw'}" width="${w}" height="${h}" alt="${a.alt || ''}"${a.class ? ` class="${a.class}"` : ''} style="background-color:${m.c};${style}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${fyAttr}${extra}>`;
 }
 
 const files = readdirSync(join(src, 'pages')).filter((f) => f.endsWith('.html'));

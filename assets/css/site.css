@@ -1118,6 +1118,8 @@ fieldset > legend { margin-bottom: 10px; }
   .h-xl { min-height: 420px; } .h-l { min-height: 380px; }
   .tile { min-height: 240px; }
   .tile:not(.tile--img) { min-height: 0; gap: 28px; }
+  .tile--img.h-xl { min-height: 440px; }
+  .tile--img.h-l { min-height: 400px; }
   .step { grid-template-columns: 1fr; top: calc(84px + var(--i, 0) * 10px); min-height: 0; }
   .step__media { min-height: 220px; aspect-ratio: 16 / 11; order: -1; }
   .step h3 { margin-top: 18px; }

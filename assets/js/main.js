@@ -402,6 +402,29 @@
     input.addEventListener('change', run);
   });
 
+  /* ---------- Keep faces in frame ---------- */
+  // Each photo knows where the faces are (data-fy, % from the top). For the frame it is
+  // actually shown in, slide the crop so that point sits ~42% down, under any top label.
+  const focusImgs = $$('img[data-fy]');
+  function placeFocus() {
+    focusImgs.forEach((img) => {
+      const box = img.getBoundingClientRect();
+      const nw = +img.getAttribute('width'), nh = +img.getAttribute('height');
+      if (!box.width || !box.height || !nw || !nh) return;
+      const scale = Math.max(box.width / nw, box.height / nh);
+      const visible = box.height / (nh * scale);           // share of the photo's height on show
+      if (visible >= 0.999) { img.style.objectPosition = '50% 50%'; return; }
+      const fy = +img.dataset.fy / 100, target = 0.42;
+      const p = Math.min(1, Math.max(0, (fy - target * visible) / (1 - visible)));
+      img.style.objectPosition = `50% ${(p * 100).toFixed(1)}%`;
+    });
+  }
+  CBK.placeFocus = placeFocus;
+  placeFocus();
+  let fTimer;
+  window.addEventListener('resize', () => { clearTimeout(fTimer); fTimer = setTimeout(placeFocus, 150); });
+  window.addEventListener('load', placeFocus);
+
   /* ---------- Balanced masonry (galleries & reviews) ---------- */
   // Places each item in the shortest column; photo galleries then trim the last
   // photo of each column so every column ends on the same line.
@@ -454,6 +477,7 @@
       });
     }
     grid.classList.remove('is-measuring');
+    placeFocus();
     grid._cols = cols; grid._w = window.innerWidth;
     if (window.ScrollTrigger) window.ScrollTrigger.refresh();
   }
