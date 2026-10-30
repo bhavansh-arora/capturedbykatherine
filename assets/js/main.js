@@ -14,7 +14,6 @@
       const v = Math.round(n * 100) / 100;
       return '$' + v.toLocaleString('en-AU', { minimumFractionDigits: opts.cents && v % 1 ? 2 : 0, maximumFractionDigits: opts.cents ? 2 : 0 });
     },
-    incGst(n) { return n * (1 + (CBK.gstRate || 0.1)); },
     parseDate(str) {
       const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(str || '');
       if (!m) return null;

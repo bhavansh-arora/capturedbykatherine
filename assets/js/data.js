@@ -1,4 +1,4 @@
-/* Captured by Katherine — one source of truth for prices, packages and settings.
+/* Captured by Katherine — one source of truth for prices (AUD), packages and settings.
    Edit this file to update every price, tool and form on the site at once. */
 window.CBK = {
   contact: {
@@ -15,8 +15,8 @@ window.CBK = {
   // Dates already booked (YYYY-MM-DD). The date checker shows these as taken.
   bookedDates: [],
 
-  gstRate: 0.10,
-  depositIncGst: 330,
+  currency: 'AUD',        // all prices are in Australian dollars
+  deposit: 330,
   extraHourRate: 330,
   maxExtraHours: 2,
   bookAheadMonths: '9–12',

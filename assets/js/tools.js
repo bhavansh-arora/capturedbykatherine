@@ -1,5 +1,5 @@
 /* Captured by Katherine — booking tools
-   Package finder · Wedding-day planner · Formals splitter · Golden-hour finder · GST toggle · Smart enquiry */
+   Package finder · Wedding-day planner · Formals splitter · Golden-hour finder · Smart enquiry */
 (function () {
   'use strict';
   const CBK = window.CBK;
@@ -32,22 +32,6 @@
     d.setDate(d.getDate() + ((6 - d.getDay() + 7) % 7));
     return U.iso(d);
   }
-
-  /* ---------- GST toggle ---------- */
-  const priceEls = $$('[data-price]');
-  function renderPrices(mode) {
-    priceEls.forEach((el) => {
-      const ex = parseFloat(el.dataset.price);
-      el.innerHTML = '<small>$</small>' + Math.round(mode === 'inc' ? U.incGst(ex) : ex).toLocaleString('en-AU');
-    });
-    $$('[data-gst-label]').forEach((el) => { el.textContent = mode === 'inc' ? 'Including GST' : 'Plus GST'; });
-  }
-  $$('[data-gst-toggle]').forEach((group) => {
-    $$('button', group).forEach((b) => b.addEventListener('click', () => {
-      $$('[data-gst-toggle] button').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.gst === b.dataset.gst)));
-      renderPrices(b.dataset.gst);
-    }));
-  });
 
   /* ---------- Package finder ---------- */
   const MOMENTS = {
@@ -84,7 +68,7 @@
         <dl class="stat-row">
           <div><dt>Coverage</dt><dd>${best.pkg.hours + best.extra} hrs</dd></div>
           <div><dt>Investment</dt><dd>${money(best.cost)}</dd></div>
-          <div><dt>Inc. GST</dt><dd>${money(U.incGst(best.cost))}</dd></div>
+          <div><dt>Deposit</dt><dd>${money(CBK.deposit)}</dd></div>
         </dl>
         <div class="tool__actions" style="margin-top:0">
           <a class="btn btn--copper" href="enquire.html?type=wedding&package=${best.pkg.id}&hours=${best.pkg.hours + best.extra}"><span>Enquire about ${esc(best.pkg.name)}</span><i class="btn__dot" aria-hidden="true"></i></a>
@@ -173,7 +157,7 @@
           <div>
             <p class="eyebrow eyebrow--light">Recommended</p>
             <h4>${esc(pkgLabel(best))}</h4>
-            <p>${money(best.cost)} plus GST (${money(U.incGst(best.cost))} incl.). Your date is secured with a ${money(CBK.depositIncGst)} deposit.</p>
+            <p>${money(best.cost)} AUD. Your date is secured with a ${money(CBK.deposit)} deposit.</p>
           </div>
           <a class="btn btn--sm no-print" data-plan-send href="#"><span>Send this plan</span><i class="btn__dot" aria-hidden="true"></i></a>
         </div>
@@ -207,12 +191,11 @@
       const type = $('input[name="ftype"]:checked', fc).value;
       const L = CBK.lifestyle;
       const ex = type === 'preFormal' ? L.preFormal.price + Math.max(0, n - L.preFormal.includedCouples) * L.preFormal.extraCouple : L.preSemi.price;
-      const inc = U.incGst(ex);
       range.style.setProperty('--p', ((n - range.min) / (range.max - range.min)) * 100 + '%');
       $('[data-fc-n]', fc).textContent = n;
-      $('[data-fc-total]', fc).innerHTML = `${money(inc)}<small>incl. GST</small>`;
-      $('[data-fc-each]', fc).textContent = money(inc / n, { cents: true });
-      $('[data-fc-ex]', fc).textContent = money(ex);
+      $('[data-fc-total]', fc).innerHTML = `${money(ex)}<small>AUD</small>`;
+      $('[data-fc-each]', fc).textContent = money(ex / n, { cents: true });
+      $('[data-fc-ex]', fc).textContent = n;
       $('[data-fc-note]', fc).textContent = type === 'preFormal'
         ? (n > 10 ? `${money(L.preFormal.price)} covers 10 couples, plus ${n - 10} × ${money(L.preFormal.extraCouple)}.` : `${money(L.preFormal.price)} covers up to 10 couples.`)
         : 'Flat fee for a two-hour session at one location.';
@@ -303,7 +286,7 @@
     } else note = 'Katherine will tailor a quote for you.';
     box.innerHTML = ex == null
       ? `<span>${esc(note)}</span>`
-      : `<div><span>Estimated investment</span><br><b>${money(ex)}</b> <span>+ GST (${money(U.incGst(ex))} incl.)</span></div><span style="text-align:right">${esc(note)}</span>`;
+      : `<div><span>Estimated investment</span><br><b>${money(ex)}</b> <span>AUD</span></div><span style="text-align:right">${esc(note)}</span>`;
     return { ex, note };
   }
   form.addEventListener('change', (e) => {
@@ -343,7 +326,7 @@
       ['Date', d ? U.niceDate(d, true) + (val('flexible') ? ' (flexible)' : '') : (val('flexible') ? 'Flexible' : '—')],
       ['Location', val('location') || 'To be decided'],
       ['Details', est.note || '—'],
-      ['Estimate', est.ex == null ? 'Tailored quote' : `${money(est.ex)} + GST`],
+      ['Estimate', est.ex == null ? 'Tailored quote' : `${money(est.ex)} AUD`],
       ['People', val('people') || (o === 'formal' ? `${val('couples')} couples` : '—')],
       ['Name', `${val('first')} ${val('last')}`.trim()],
       ['Email', val('email')],

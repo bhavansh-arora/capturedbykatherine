@@ -12,7 +12,7 @@ The site is plain static HTML, CSS and JavaScript with no framework or server. D
 | `weddings.html` | Approach, what's included, lightbox gallery, booking process timeline, collections |
 | `family.html` | Sessions, **golden-hour finder**, gallery, styling guide, FAQ |
 | `formals.html` | Sessions, **group cost splitter**, gallery, FAQ |
-| `investment.html` | All pricing with a **GST toggle** and the **collection finder** |
+| `investment.html` | All pricing (in AUD) and the **collection finder** |
 | `planner.html` | **Wedding-day timeline planner**, timed to Brisbane sunset, with coverage and package recommendation |
 | `portfolio.html` | Filterable gallery (`?f=weddings`, `?f=family`, `?f=formals`) with lightbox |
 | `about.html` | Katherine's story |
@@ -24,9 +24,9 @@ The site is plain static HTML, CSS and JavaScript with no framework or server. D
 
 Everything lives in **`assets/js/data.js`**:
 
-- `weddings` / `lifestyle`: package names, hours and prices (plus GST). The finder, planner, cost splitter and enquiry estimate all read from here.
+- `weddings` / `lifestyle`: package names, hours and prices (AUD). The finder, planner, cost splitter and enquiry estimate all read from here.
 - `bookedDates`: add taken dates as `'2027-03-20'`. The date checkers then show them as booked.
-- `extraHourRate`, `maxExtraHours`, `depositIncGst`, `gstRate`.
+- `extraHourRate`, `maxExtraHours`, `deposit`, `currency`.
 - `formEndpoint`: paste a Formspree, Basin or similar JSON endpoint to receive enquiries directly. If it's left empty, the enquiry opens a pre-written email to Katherine with every detail filled in.
 
 Prices also appear as text in the page markup for search engines. If a price changes, update both `data.js` and the page copy in `_build/src/pages/`.
