@@ -127,8 +127,9 @@
   steps.forEach((step, i) => {
     const next = steps[i + 1];
     if (!next) return;
-    gsap.to(step, {
-      scale: 0.94, filter: 'brightness(.94)', ease: 'none',
+    // Scale only: tweening filter from 'none' starts at brightness(0), which turned cards black
+    gsap.fromTo(step, { scale: 1 }, {
+      scale: 0.95, ease: 'none',
       scrollTrigger: { trigger: next, start: 'top bottom', end: 'top 25%', scrub: true }
     });
   });
