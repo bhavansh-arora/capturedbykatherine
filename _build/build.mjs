@@ -4,6 +4,7 @@
 // Run: node build.mjs
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const root = dirname(fileURLToPath(import.meta.url));
@@ -58,6 +59,10 @@ function img(a) {
   return picOpen + `<img src="assets/img/${a.name}-lg.webp" srcset="${set.join(', ')}" sizes="${a.sizes || '100vw'}" width="${w}" height="${h}" alt="${a.alt || ''}"${a.class ? ` class="${a.class}"` : ''} style="background-color:${m.c};${style}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${fyAttr}${mAttrs}${extra}>` + picClose;
 }
 
+// Cache-busting: stamp each CSS/JS link with a hash of the file, so browsers always fetch the latest
+const stamp = (p) => createHash('sha1').update(readFileSync(join(dist, p))).digest('hex').slice(0, 8);
+const versionAssets = (html) => html.replace(/(href|src)="(assets\/(?:css|js|vendor)\/[^"?]+\.(?:css|js))"/g, (_, attr, p) => `${attr}="${p}?v=${stamp(p)}"`);
+
 const files = readdirSync(join(src, 'pages')).filter((f) => f.endsWith('.html'));
 for (const f of files) {
   let body = readFileSync(join(src, 'pages', f), 'utf8');
@@ -80,6 +85,7 @@ for (const f of files) {
   // Mark the active nav link
   if (page.nav) html = html.replace(new RegExp(`data-nav="${page.nav}"`, 'g'), `data-nav="${page.nav}" aria-current="page"`);
   html = html.replace(/<x-img\s([^>]*?)\/?>/g, (_, a) => img(attrs(a)));
+  html = versionAssets(html);
   writeFileSync(join(dist, f), html);
   console.log('built', f);
 }
