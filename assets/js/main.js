@@ -58,6 +58,9 @@
     params() { return new URLSearchParams(location.search); }
   };
   CBK.util = util;
+  // Build version: added to page links so browsers never reuse an out-of-date page
+  CBK.v = (document.querySelector('meta[name="cbk-build"]') || {}).content || '';
+  CBK.fresh = (href) => { const u = new URL(href, location.href); if (CBK.v && u.origin === location.origin && /\.html$/.test(u.pathname)) u.searchParams.set('v', CBK.v); return u.href; };
 
   /* ---------- Smooth scroll (Lenis) ---------- */
   let lenis = null;
@@ -199,7 +202,7 @@
     loader.classList.remove('is-below');
     // Leave only once the panel has fully closed and the title has settled,
     // so the next page can open on exactly this frame.
-    setTimeout(() => { location.href = url.href; }, 1080);
+    setTimeout(() => { location.href = CBK.fresh(url.href); }, 1080);
   });
 
   // Start fetching a page as soon as someone shows intent to visit it
@@ -210,7 +213,7 @@
     const url = new URL(a.getAttribute('href'), location.href);
     if (url.origin !== location.origin || prefetched.has(url.pathname)) return;
     prefetched.add(url.pathname);
-    const l = document.createElement('link'); l.rel = 'prefetch'; l.href = url.pathname; document.head.appendChild(l);
+    const l = document.createElement('link'); l.rel = 'prefetch'; l.href = CBK.fresh(url.href); document.head.appendChild(l);
   };
   document.addEventListener('pointerover', prefetch, { passive: true });
   document.addEventListener('touchstart', prefetch, { passive: true });

@@ -2,7 +2,7 @@
 // - Wraps each page in src/layout.html with the shared header + footer
 // - Expands <x-img name="..." alt="..." sizes="..."> into responsive <img> tags
 // Run: node build.mjs
-import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
@@ -63,6 +63,15 @@ function img(a) {
 const stamp = (p) => createHash('sha1').update(readFileSync(join(dist, p))).digest('hex').slice(0, 8);
 const versionAssets = (html) => html.replace(/(href|src)="(assets\/(?:css|js|vendor)\/[^"?]+\.(?:css|js))"/g, (_, attr, p) => `${attr}="${p}?v=${stamp(p)}"`);
 
+// One build version for the whole site (changes whenever any page source, style or script changes).
+// Internal page links carry it (?v=...), so browsers fetch the current page instead of an old cached copy.
+const walk = (d) => readdirSync(d).flatMap((n) => { const p = join(d, n); return statSync(p).isDirectory() ? walk(p) : [p]; });
+const BUILD = createHash('sha1').update(
+  [...walk(src), ...walk(join(dist, 'assets', 'css')), ...walk(join(dist, 'assets', 'js'))].sort().map((p) => readFileSync(p)).join('')
+).digest('hex').slice(0, 8);
+const versionLinks = (html) => html.replace(/href="([a-z0-9-]+\.html)((?:\?[^"#]*)?)((?:#[^"]*)?)"/g,
+  (_, page, q, hash) => `href="${page}${q ? q + '&amp;' : '?'}v=${BUILD}${hash}"`);
+
 const files = readdirSync(join(src, 'pages')).filter((f) => f.endsWith('.html'));
 for (const f of files) {
   let body = readFileSync(join(src, 'pages', f), 'utf8');
@@ -85,7 +94,7 @@ for (const f of files) {
   // Mark the active nav link
   if (page.nav) html = html.replace(new RegExp(`data-nav="${page.nav}"`, 'g'), `data-nav="${page.nav}" aria-current="page"`);
   html = html.replace(/<x-img\s([^>]*?)\/?>/g, (_, a) => img(attrs(a)));
-  html = versionAssets(html);
+  html = versionLinks(versionAssets(html)).replace('</head>', `  <meta name="cbk-build" content="${BUILD}">\n</head>`);
   writeFileSync(join(dist, f), html);
   console.log('built', f);
 }

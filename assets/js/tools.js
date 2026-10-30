@@ -172,7 +172,7 @@
       $('[data-plan-send]', out).addEventListener('click', (e) => {
         e.preventDefault();
         try { sessionStorage.setItem('cbk-plan', JSON.stringify(plan)); } catch (err) { /* storage unavailable */ }
-        location.href = `enquire.html?type=wedding&date=${plan.date}&package=${plan.package}&hours=${best.pkg.hours + best.extra}&from=planner`;
+        location.href = CBK.fresh(`enquire.html?type=wedding&date=${plan.date}&package=${plan.package}&hours=${best.pkg.hours + best.extra}&from=planner`);
       });
     };
     f.addEventListener('input', build);
