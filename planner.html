@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0..100,0..1;1,9..144,300..600,0..100,0..1&family=Geist+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="assets/css/site.css?v=b9f03775">
+  <link rel="stylesheet" href="assets/css/site.css?v=4fc5d831">
   <script>document.documentElement.classList.replace('no-js','js');if(matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('reduced');</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Captured by Katherine","image":"https://capturedbykatherine.com.au/assets/img/wedding-golden-hour-lg.webp","url":"https://capturedbykatherine.com.au/","founder":"Katherine Christensen","telephone":"+61416344067","email":"katherine@capturedbykatherine.com.au","address":{"@type":"PostalAddress","addressLocality":"Brisbane","addressRegion":"QLD","addressCountry":"AU"},"areaServed":["Brisbane","Gold Coast","Sunshine Coast","South East Queensland"],"priceRange":"$550–$3,700","foundingDate":"2009","slogan":"Candid. Relaxed. Thoughtful."}</script>
 </head>
@@ -74,16 +74,20 @@
     <div class="menu__inner">
       <p class="eyebrow menu__eyebrow">Menu</p>
       <nav class="menu__links" aria-label="Mobile">
-        <a href="index.html"><span>01</span>Home</a>
-        <a href="about.html"><span>02</span>About</a>
+        <a href="index.html" data-nav="home"><span>01</span>Home</a>
+        <a href="about.html" data-nav="about"><span>02</span>About</a>
         <div class="menu__group">
           <p class="menu__label"><span>03</span>Sessions</p>
-          <div class="menu__sub"><a href="weddings.html">Weddings</a><a href="family.html">Family</a><a href="formals.html">Formals</a></div>
+          <div class="menu__sessions">
+            <a class="menu__card" href="weddings.html" data-nav="weddings"><img src="assets/img/wedding-golden-hour-lg.webp" srcset="assets/img/wedding-golden-hour-sm.webp 900w, assets/img/wedding-golden-hour-lg.webp 1600w" sizes="160px" width="1600" height="1067" alt="" style="background-color:#89816f;object-position:52% 23%;" loading="lazy" decoding="async" data-fy="30" data-fx="52"><span>Weddings</span><small>From $950</small></a>
+            <a class="menu__card" href="family.html" data-nav="family"><img src="assets/img/family-golden-couple-baby-lg.webp" srcset="assets/img/family-golden-couple-baby-sm.webp 600w, assets/img/family-golden-couple-baby-lg.webp 1067w" sizes="160px" width="1067" height="1600" alt="" style="background-color:#827d74;object-position:50% 28%;" loading="lazy" decoding="async" data-fy="37"><span>Family</span><small>From $550</small></a>
+            <a class="menu__card" href="formals.html" data-nav="formals"><img src="assets/img/formal-gold-dress-lg.webp" srcset="assets/img/formal-gold-dress-sm.webp 600w, assets/img/formal-gold-dress-lg.webp 1067w" sizes="160px" width="1067" height="1600" alt="" style="background-color:#5d513b;object-position:50% 18%;" loading="lazy" decoding="async" data-fy="24"><span>Formals</span><small>$750</small></a>
+          </div>
         </div>
-        <a href="investment.html"><span>04</span>Investment</a>
-        <a href="portfolio.html"><span>05</span>Portfolio</a>
-        <a href="reviews.html"><span>06</span>Kind words</a>
-        <a href="planner.html"><span>07</span>Day planner <em class="nav__new">New</em></a>
+        <a href="investment.html" data-nav="investment"><span>04</span>Investment</a>
+        <a href="portfolio.html" data-nav="portfolio"><span>05</span>Portfolio</a>
+        <a href="reviews.html" data-nav="reviews"><span>06</span>Kind words</a>
+        <a href="planner.html" data-nav="planner" aria-current="page"><span>07</span>Day planner <em class="nav__new">New</em></a>
       </nav>
       <div class="menu__foot">
         <a class="btn btn--copper" href="enquire.html"><span>Check your date</span><i class="btn__dot" aria-hidden="true"></i></a>

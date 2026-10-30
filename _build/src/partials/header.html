@@ -29,16 +29,20 @@
     <div class="menu__inner">
       <p class="eyebrow menu__eyebrow">Menu</p>
       <nav class="menu__links" aria-label="Mobile">
-        <a href="index.html"><span>01</span>Home</a>
-        <a href="about.html"><span>02</span>About</a>
+        <a href="index.html" data-nav="home"><span>01</span>Home</a>
+        <a href="about.html" data-nav="about"><span>02</span>About</a>
         <div class="menu__group">
           <p class="menu__label"><span>03</span>Sessions</p>
-          <div class="menu__sub"><a href="weddings.html">Weddings</a><a href="family.html">Family</a><a href="formals.html">Formals</a></div>
+          <div class="menu__sessions">
+            <a class="menu__card" href="weddings.html" data-nav="weddings"><x-img name="wedding-golden-hour" alt="" sizes="160px" /><span>Weddings</span><small>From $950</small></a>
+            <a class="menu__card" href="family.html" data-nav="family"><x-img name="family-golden-couple-baby" alt="" sizes="160px" /><span>Family</span><small>From $550</small></a>
+            <a class="menu__card" href="formals.html" data-nav="formals"><x-img name="formal-gold-dress" alt="" sizes="160px" /><span>Formals</span><small>$750</small></a>
+          </div>
         </div>
-        <a href="investment.html"><span>04</span>Investment</a>
-        <a href="portfolio.html"><span>05</span>Portfolio</a>
-        <a href="reviews.html"><span>06</span>Kind words</a>
-        <a href="planner.html"><span>07</span>Day planner <em class="nav__new">New</em></a>
+        <a href="investment.html" data-nav="investment"><span>04</span>Investment</a>
+        <a href="portfolio.html" data-nav="portfolio"><span>05</span>Portfolio</a>
+        <a href="reviews.html" data-nav="reviews"><span>06</span>Kind words</a>
+        <a href="planner.html" data-nav="planner"><span>07</span>Day planner <em class="nav__new">New</em></a>
       </nav>
       <div class="menu__foot">
         <a class="btn btn--copper" href="enquire.html"><span>Check your date</span><i class="btn__dot" aria-hidden="true"></i></a>
