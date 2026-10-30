@@ -67,6 +67,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 h1, h2, h3, h4, p, figure, blockquote, ul, ol, dl, dd { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
 [hidden] { display: none !important; }
+picture.pic { display: contents; }
 input[type="date"], input[type="time"] { cursor: pointer; }
 input[type="date"]::-webkit-calendar-picker-indicator, input[type="time"]::-webkit-calendar-picker-indicator { cursor: pointer; }
 .datecheck__row { cursor: pointer; }
@@ -821,7 +822,7 @@ main + .footer .footer__inner { border-radius: var(--r-xl); }
 .is-masonry { columns: auto !important; display: flex; gap: var(--gap); align-items: flex-start; }
 .masonry__col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: var(--gap); }
 .masonry__col > * { margin-bottom: 0 !important; }
-.masonry__col .mosaic__item img { object-fit: cover; }
+.masonry__col .mosaic__item img { object-fit: cover; object-position: 50% 28%; }
 .rv-grid.is-masonry:not(.is-measuring) { align-items: stretch; }
 .rv-grid:not(.is-measuring) .masonry__col > .rv { flex-grow: 1; display: flex; flex-direction: column; }
 .rv-grid:not(.is-measuring) .masonry__col > .rv .rv__body { flex: 1; display: flex; flex-direction: column; }
@@ -966,7 +967,7 @@ fieldset > legend { margin-bottom: 10px; }
 .enq__nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: auto; padding-top: 26px; border-top: 1px solid var(--line); }
 .enq__back { font-weight: 600; font-size: 14px; color: var(--ink-2); display: inline-flex; gap: 8px; align-items: center; padding: 10px 0; }
 .enq__nav [data-enq-next] { margin-left: auto; }
-.enq__step > legend { float: left; width: 100%; padding: 0; margin: 0; }
+.enq__step > legend { float: left; width: 100%; padding: 0; margin: 0 0 clamp(20px, 2.4vw, 28px); }
 .enq__step > legend + * { clear: both; }
 .opts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
 .opts--3 { grid-template-columns: repeat(3, 1fr); }
@@ -1171,7 +1172,11 @@ fieldset > legend { margin-bottom: 10px; }
   .stat-row > div:last-child { grid-column: 1 / -1; border-left: 0; padding-left: 0; border-top: 1px solid var(--night-line); margin-top: 16px; }
   .panel:not(.panel--dark) .stat-row > div:last-child { border-top-color: var(--line); }
   .swatches, .tips { grid-template-columns: 1fr; }
-  .collage { min-height: 420px; }
+  .collage { min-height: 0; display: grid; grid-template-columns: 1.15fr 1fr; grid-template-rows: 1fr 1fr; gap: var(--gap); }
+  .collage figure, .collage figure:nth-child(1), .collage figure:nth-child(2), .collage figure:nth-child(3) { position: relative; inset: auto; width: auto; height: auto; box-shadow: none; }
+  .collage figure:nth-child(1) { grid-row: 1 / span 2; }
+  .collage figure:nth-child(2), .collage figure:nth-child(3) { aspect-ratio: 1 / 1.05; }
+  .collage figure img { position: absolute; inset: 0; }
   .footer__grid { grid-template-columns: 1fr 1fr; }
   .footer__word { white-space: normal; font-size: 15.5vw; line-height: .9; }
   .footer__bar { flex-direction: column; gap: 6px; }

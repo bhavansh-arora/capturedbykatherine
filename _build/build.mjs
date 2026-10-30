@@ -36,14 +36,26 @@ function img(a) {
   const h = Math.round(m.h * Math.min(1, 1600 / long));
   const eager = a.eager !== undefined;
   const extra = Object.entries(a)
-    .filter(([k]) => !['name', 'alt', 'sizes', 'xl', 'eager', 'class', 'style'].includes(k))
+    .filter(([k]) => !['name', 'alt', 'sizes', 'xl', 'eager', 'class', 'style', 'mobile'].includes(k))
     .map(([k, v]) => (v === '' ? ` ${k}` : ` ${k}="${v}"`)).join('');
   // A photo's focal point (fy, % from the top) keeps every crop centred on the people
   let style = a.style || '';
   // With JS, main.js keeps the faces in view for whatever frame the photo is in; this is the no-JS fallback.
   let fyAttr = '';
-  if (m.fy !== undefined) { style = `object-position:50% ${Math.round(m.fy * 0.75)}%;` + style.replace(/object-position:[^;]*;?/g, ''); fyAttr = ` data-fy="${m.fy}"`; }
-  return `<img src="assets/img/${a.name}-lg.webp" srcset="${set.join(', ')}" sizes="${a.sizes || '100vw'}" width="${w}" height="${h}" alt="${a.alt || ''}"${a.class ? ` class="${a.class}"` : ''} style="background-color:${m.c};${style}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${fyAttr}${extra}>`;
+  if (m.fy !== undefined) { style = `object-position:${m.fx ?? 50}% ${Math.round(m.fy * 0.75)}%;` + style.replace(/object-position:[^;]*;?/g, ''); fyAttr = ` data-fy="${m.fy}"` + (m.fx !== undefined ? ` data-fx="${m.fx}"` : ''); }
+  // Art direction: a different (portrait) photo on phones, where a wide shot can't fit everyone
+  let picOpen = '', picClose = '', mAttrs = '';
+  if (a.mobile) {
+    const mm = meta[a.mobile];
+    if (!mm) throw new Error(`Unknown mobile image: ${a.mobile}`);
+    const mlong = Math.max(mm.w, mm.h);
+    const mset = Object.entries(variants).filter(([k]) => k !== 'xl').map(([k, L]) => `assets/img/${a.mobile}-${k}.webp ${Math.round(mm.w * Math.min(1, L / mlong))}w`);
+    const mw = Math.round(mm.w * Math.min(1, 1600 / mlong)), mh = Math.round(mm.h * Math.min(1, 1600 / mlong));
+    picOpen = `<picture class="pic"><source media="(max-width: 760px)" srcset="${mset.join(', ')}" sizes="${a.sizes || '100vw'}" width="${mw}" height="${mh}">`;
+    picClose = '</picture>';
+    mAttrs = ` data-m-w="${mw}" data-m-h="${mh}"` + (mm.fx !== undefined ? ` data-m-fx="${mm.fx}"` : '') + (mm.fy !== undefined ? ` data-m-fy="${mm.fy}"` : '');
+  }
+  return picOpen + `<img src="assets/img/${a.name}-lg.webp" srcset="${set.join(', ')}" sizes="${a.sizes || '100vw'}" width="${w}" height="${h}" alt="${a.alt || ''}"${a.class ? ` class="${a.class}"` : ''} style="background-color:${m.c};${style}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${fyAttr}${mAttrs}${extra}>` + picClose;
 }
 
 const files = readdirSync(join(src, 'pages')).filter((f) => f.endsWith('.html'));

@@ -419,20 +419,23 @@
   });
 
   /* ---------- Keep faces in frame ---------- */
-  // Each photo knows where the faces are (data-fy, % from the top). For the frame it is
-  // actually shown in, slide the crop so that point sits ~42% down, under any top label.
-  const focusImgs = $$('img[data-fy]');
+  // Each photo knows where the faces are (data-fx / data-fy, % of its width / height). For the
+  // frame it is actually shown in, slide the crop so faces sit centred across, ~42% down.
+  const focusImgs = $$('img[data-fy], img[data-fx], img[data-m-w]');
+  const phoneArt = matchMedia('(max-width: 760px)');
   function placeFocus() {
     focusImgs.forEach((img) => {
       const box = img.getBoundingClientRect();
-      const nw = +img.getAttribute('width'), nh = +img.getAttribute('height');
+      const m = img.dataset.mW && phoneArt.matches;   // phones may show a different photo
+      const nw = m ? +img.dataset.mW : +img.getAttribute('width'), nh = m ? +img.dataset.mH : +img.getAttribute('height');
       if (!box.width || !box.height || !nw || !nh) return;
       const scale = Math.max(box.width / nw, box.height / nh);
-      const visible = box.height / (nh * scale);           // share of the photo's height on show
-      if (visible >= 0.999) { img.style.objectPosition = '50% 50%'; return; }
-      const fy = +img.dataset.fy / 100, target = 0.42;
-      const p = Math.min(1, Math.max(0, (fy - target * visible) / (1 - visible)));
-      img.style.objectPosition = `50% ${(p * 100).toFixed(1)}%`;
+      const visW = box.width / (nw * scale), visH = box.height / (nh * scale);   // share of the photo on show
+      const pos = (f, vis, target) => (vis >= 0.999 ? 50 : Math.min(100, Math.max(0, ((f - target * vis) / (1 - vis)) * 100)));
+      const fxv = m ? img.dataset.mFx : img.dataset.fx, fyv = m ? img.dataset.mFy : img.dataset.fy;
+      const fx = fxv !== undefined ? +fxv / 100 : 0.5;
+      const fy = fyv !== undefined ? +fyv / 100 : 0.5;
+      img.style.objectPosition = `${pos(fx, visW, 0.5).toFixed(1)}% ${pos(fy, visH, 0.42).toFixed(1)}%`;
     });
   }
   CBK.placeFocus = placeFocus;
@@ -440,6 +443,7 @@
   let fTimer;
   window.addEventListener('resize', () => { clearTimeout(fTimer); fTimer = setTimeout(placeFocus, 150); });
   window.addEventListener('load', placeFocus);
+  CBK.revealed && CBK.revealed.then(() => setTimeout(placeFocus, 50));
 
   /* ---------- Balanced masonry (galleries & reviews) ---------- */
   // Places each item in the shortest column; photo galleries then trim the last
